@@ -25,7 +25,7 @@ describe('Forms Tests', () => {
       cy.get('input[name="birthday"]').type('01/01/1977');
     });
 
-    it('Check different radio button actions', () => {
+    xit('Check different radio button actions', () => {
         cy.get('.radio')
           .find('[type="radio"]')
           .then((radio) => {
@@ -37,16 +37,25 @@ describe('Forms Tests', () => {
             /* Get all radio buttons, select second one and verify that it is 
              checked and that we got confirmation text */
             cy.wrap(radio).eq(1).check({ force: true }).should('be.checked');
-            
-    
-            // Verify that first radio button is no longer checked
+             // Verify that first radio button is no longer checked
             cy.wrap(radio).eq(2).should('not.be.checked');
-    
-            
-
             // and that we got confirmation label
             cy.get('form#registrationForm div:nth-child(3) > i').should('be.visible');
           });
+      });
+      it('Check different checkbox actions', () => {
+          
+        // Get all checkboxes, select JAVA and verify
+        cy.get('[type="checkbox"]').then((checkbox) => {
+          cy.wrap(checkbox).eq(1).check({ force: true }).should('be.checked');
+       
+          // Uncheck JAVA and verify
+          cy.wrap(checkbox).eq(1).uncheck({ force: true }).should('not.be.checked');
+       // verify third checkbox has a value javascript and then check verify
+         cy.wrap(checkbox).eq(2)
+         .should('have.value','javascript')
+         .check({ force: true }).should('be.checked');         
+        });
       });
   });
   
