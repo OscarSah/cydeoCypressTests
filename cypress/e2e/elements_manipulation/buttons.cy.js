@@ -17,7 +17,7 @@ describe('Buttons: Button actions', () => {
         cy.contains('Clicked on button three!').should('be.visible');
       });
 
-      // getting multiple elements and doing a loop
+      // getting multiple elements
       // By tag name
       cy.get('button').each((item,index,list) => {
         // assert the length of the list 
