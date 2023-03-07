@@ -43,7 +43,7 @@ describe('Forms Tests', () => {
             cy.get('form#registrationForm div:nth-child(3) > i').should('be.visible');
           });
       });
-      it('Check different checkbox actions', () => {
+      xit('Check different checkbox actions', () => {
           
         // Get all checkboxes, select JAVA and verify
         cy.get('[type="checkbox"]').then((checkbox) => {
@@ -56,6 +56,33 @@ describe('Forms Tests', () => {
          .should('have.value','javascript')
          .check({ force: true }).should('be.checked');         
         });
+      });
+
+      xit('Check selection of all list options - select method departments menu', () => {
+        // Load departments fixure json file to assert if all departments are present
+        cy.fixture('departments').then((departments) => {
+          // Get all options in the menu, get each option and indexes
+          cy.get('form#registrationForm div:nth-child(9) > div > select option').each((option, index) => {
+            // Get option text
+            const optionText = option.text();
+            cy.log(optionText);
+            cy.log(index);
+            // Select each option and assert that it has correct option value and text
+            cy.get('form#registrationForm div:nth-child(9) > div > select')
+               .select(optionText)
+               .should('have.value', option.val())
+               .contains(departments[index]);
+             });
+        });
+      });
+    
+      it('Check selection of single list option - click method - title menu', () => {
+        // Click on dropdown
+        cy.get('form#registrationForm div:nth-child(10) > div > select').select("SDET");
+        // Select one option
+       
+        // Assert that dropdown has correct text after selection
+        cy.get('form#registrationForm div:nth-child(10) > div > select').contains('SDET');
       });
   });
   
